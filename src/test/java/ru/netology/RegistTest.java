@@ -36,43 +36,26 @@ public class RegistTest {
         $("[data-test-id='login'] input").setValue(blockedUser.getLogin());
         $("[data-test-id='password'] input").setValue(blockedUser.getPassword());
         $("button.button").click();
-        $("[data-test-id='error-notification'].notification__content")
-                .shouldHave(Condition.text("Ошибка! Пользователь заблокирован"), Duration.ofSeconds(15))
-                .shouldBe(Condition.visible);
+        $("[data-test-id='error-notification'] .notification__content").shouldHave(Condition.exactText("Ошибка! Пользователь заблокирован")).shouldBe(Condition.visible);
     }
 
     @Test
     void errorIfInvalidUser() {
-        var invalidUser = getUser("active");
-        $("[data-test-id='login'] input").setValue(invalidUser.getLogin());
-        $("[data-test-id='password'] input").setValue(invalidUser.getPassword());
-        $("button.button").click();
-        $("[data-test-id='error-notification'].notification__content")
-                .shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"), Duration.ofSeconds(15))
-                .shouldBe(Condition.visible);
-    }
-
-    @Test
-    void errorIfWrongLogin() {
         var validUser = getValidUser("active");
         var wrongLogin = randomLogin();
         $("[data-test-id='login'] input").setValue(wrongLogin);
         $("[data-test-id='password'] input").setValue(validUser.getPassword());
         $("button.button").click();
-        $("[data-test-id='error-notification'].notification__content")
-                .shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"), Duration.ofSeconds(15))
-                .shouldBe(Condition.visible);
+        $("[data-test-id='error-notification'] .notification__content").shouldHave(Condition.exactText("Ошибка! Неверно указан логин или пароль")).shouldBe(Condition.visible);
     }
 
     @Test
-    void errorIfWrongPassword() {
+    void errorIfWrongLogin() {
         var validUser = getValidUser("active");
-        var wrongPwd = randomPwd();
+        var wrongPassword = randomPwd();
         $("[data-test-id='login'] input").setValue(validUser.getLogin());
-        $("[data-test-id='password'] input").setValue(wrongPwd);
+        $("[data-test-id='password'] input").setValue(wrongPassword);
         $("button.button").click();
-        $("[data-test-id='error-notification'].notification__content")
-                .shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"), Duration.ofSeconds(15))
-                .shouldBe(Condition.visible);
+        $("[data-test-id='error-notification'] .notification__content").shouldHave(Condition.exactText("Ошибка! Неверно указан логин или пароль")).shouldBe(Condition.visible);
     }
 }
